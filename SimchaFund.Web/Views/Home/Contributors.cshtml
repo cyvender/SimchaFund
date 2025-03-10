@@ -1,0 +1,99 @@
+﻿@model ContributorViewModel
+
+<div class="row">
+
+	<div class="col-md-12">
+		<button class="btn btn-info">New Contributor</button>
+		<table class="table table-hover table-bordered">
+			<tr>
+				<th>Deposit</th>
+				<th>Name</th>
+				<th>Cell</th>
+				<th>Balance</th>
+				<th>Always Include</th>
+				<th>Actions</th>
+			</tr>
+			@foreach (var contributor in Model.Contributors)
+			{
+				<tr>
+					<td>
+						<button class="btn btn-success" data-contribid="@contributor.Id">Deposit</button>
+					</td>
+					<td>@contributor.FirstName @contributor.LastName</td>
+					<td>@contributor.PhoneNumber</td>
+					<td>@contributor.Balance.ToString("C")</td>
+					<td>@contributor.AlwaysInclude</td>
+					<td><button class="btn btn-primary">Show History</button><button class="btn btn-danger">Edit</button></td>
+				</tr>
+			}
+		</table>
+	</div>
+</div>
+
+
+<div class="modal fade" id="contributor-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="post" action="/home/addcontributor">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">New Contributor</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 bg-light rounded-3 p-5">
+						<input type="text" class="form-control" placeholder="First Name" name="firstname" />
+						<br />
+						<input type="text" class="form-control" placeholder="Last Name" name="lastname" />
+						<br />
+						<input type="text" class="form-control" placeholder="Cell Number" name="phonenumber" />
+						<br />
+						<input type="text" class="form-control" placeholder="Initial Deposit" name="amount" />
+						<br />
+						<input type="date" class="form-control" placeholder="Date" name="date" />
+						<br />
+						<div class="form-check mt-3 ml-3">
+							<input type="checkbox" class="form-check-input" name="alwaysInclude" value="true">
+							<label class="form-check-label">Always Include</label>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="deposit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="post" action="/home/deposit">
+					<input type="hidden" id="contributor-id" name="id"/>
+				
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="">Deposit for...</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 bg-light rounded-3 p-5">
+						<input type="text" class="form-control" placeholder="Deposit Amount" name="amount" />
+						<br />
+						<input type="date" class="form-control" placeholder="Date" name="date" />
+						<br />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/modals.js"></script>
+	<script src="~/js/simchafund.js"></script>
+}

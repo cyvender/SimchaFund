@@ -1,0 +1,27 @@
+﻿  @model SimchaViewModel   
+
+   <div class="row">   
+
+   	<div class="col-md-12">   
+   		<button class="btn btn-info">New Simcha</button>
+        <table class="table table-hover table-bordered">
+            <tr>   
+   				<th>Contributions</th>   
+   				<th>Simcha Name</th>   
+   				<th>Contributor Count</th>   
+   				<th>Total</th>   
+   				<th>Date</th>   
+   			</tr>   
+   			@foreach (var simcha in Model.Simchas)   
+   			{   
+   				<tr>
+                    <td><a href="/home/SimchaContributors?simchaId=@simcha.SimchaId" class="btn btn-success">Contributions</a></td>
+                    <td>@simcha.SimchaName</td>   
+   					<td>@simcha.ContributorCount</td>
+                    <td>@simcha.Total.ToString("C")</td>
+                    <td>@simcha.SimchaDate</td>   
+   				</tr>   
+   			}   
+   		</table>   
+   	</div>   
+   </div>  

@@ -1,0 +1,36 @@
+﻿@model SimchaContributorViewModel
+
+<div class="row">
+
+	<div class="col-md-12">
+		<form method="post" action="/home/UpdateContributions">
+			  <table class="table table-hover table-bordered">  
+			  	<tr>  
+			  		<th>Contribute</th>  
+			  		<th>Name</th>  
+			  		<th>Balance</th>  
+			  		<th>Always Include</th>  
+			  		<th>Amount</th>  
+			  	</tr>  
+
+			  	@foreach (var contributor in Model.Contributors)  
+			  	{  
+			  		<tr>  
+			  			 <td>
+							<input type="checkbox" class="form-check-input" name="contributors[@contributor.Index].Contributed" value="true" />
+						</td>   
+			  			<td>@contributor.FirstName @contributor.LastName</td>  
+			  			<td>@contributor.Balance.ToString("C")</td>  
+			  			<td>@contributor.AlwaysInclude</td>
+						<td><input class="form-control" name="contributors[@contributor.Index].ContributionAmount" value="5" /></td>
+						<input type="hidden" name="contributors[@contributor.Index].Id" value="@contributor.Id" />
+					</tr>  
+			  	}  
+			  </table>
+			<input type="hidden" name="simchaid" value="@Model.SimchaId" />
+			<button>Update</button>
+		</form>
+		
+	</div>
+</div>
+
