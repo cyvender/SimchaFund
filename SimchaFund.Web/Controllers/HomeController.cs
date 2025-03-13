@@ -51,7 +51,7 @@ namespace SimchaFund.Web.Controllers
         public IActionResult SimchaContributors(int simchaId)
         {
             var sfdb = new SimchaFundDB(_connectionString);
-            var contributors = sfdb.GetSimchaContributors(simchaId);
+            var contributors = sfdb.ShowSimchaContributors(simchaId);
             for (int i = 0; i < contributors.Count; i++)
             {
                 contributors[i].Index = i;

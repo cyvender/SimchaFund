@@ -41,6 +41,7 @@ namespace SimchaFund.Data
 
         }
 
+
         public void AddContributor(Contributor contributor, Deposit deposit)
         {
             using var connection = new SqlConnection(_connectionString);
@@ -61,13 +62,7 @@ namespace SimchaFund.Data
             cmd.ExecuteNonQuery();
         }
 
-        public void AddListContributors(List<Contributor> contributors)
-        {
-            foreach(Contributor c in contributors)
-            {
 
-            }
-        }
         public List<Simcha> GetSimchas()
         {
             using var connection = new SqlConnection(_connectionString);
@@ -106,6 +101,7 @@ namespace SimchaFund.Data
             return simchas;
         }
 
+
         public List<Simcha> GetSimchaTotalAndCount()
         {
             using var connection = new SqlConnection(_connectionString);
@@ -129,7 +125,8 @@ namespace SimchaFund.Data
             return simchaContributions;
         }
 
-        public List<Contributor> GetSimchaContributors(int id)
+
+        public List<Contributor> ShowSimchaContributors(int id)
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
@@ -152,19 +149,23 @@ namespace SimchaFund.Data
 
             var contributors = GetContributors();
 
-            foreach (Contributor c in contributors)
+
+            //should be able to do if contains or find and then set, instead
+            foreach (Contributor contributor in contributors)
             {
                 foreach (Contribution contribution in contributions)
                 {
-                    if (c.Id == contribution.SimchaId)
+                    if (contributor.Id == contribution.ContributorId)
                     {
-                        c.Contributed = true;
+                        contributor.Contributed = true;
+                        contributor.ContributionAmount = contribution.ContributionAmount;
                         break;
                     }
                 }
             }
             return contributors;
         }
+
 
         public void Deposit(Deposit deposit)
         {
@@ -180,9 +181,12 @@ namespace SimchaFund.Data
             cmd.ExecuteNonQuery();
         }
 
+
         public void AddContributions(List<Contributor> contributors, int simchaId)
         {
             //extracts the contributors who contributed to this simcha and creates a list of contributions
+
+            //why not just pass in a list of conributions?
             var contributions = new List<Contribution>();
             foreach(Contributor c in contributors)
             {
@@ -213,7 +217,6 @@ namespace SimchaFund.Data
                 cmd.ExecuteNonQuery();
             }
         }
-
         public void DeleteContributions(int simchaId)
         {
             using var connection = new SqlConnection(_connectionString);
