@@ -9,8 +9,15 @@ $(() => {
 
     $(".btn-success").on('click', function () {
         let contribId = $(this).data("contribid");
-        $("#contributor-id").val(contribId);
+        $("#contributor-deposit-id").val(contribId);
         depositModal.show();
     });
 
+    const editModal = new bootstrap.Modal($("#edit-modal")[0]);
+
+    $(".btn-danger").on('click', function () {
+        let contribId = $(this).data("contribid");
+        $("#contributor-edit-id").val(contribId);
+        editModal.show();
+    });
 })

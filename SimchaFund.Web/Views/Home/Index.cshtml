@@ -1,27 +1,58 @@
-﻿  @model SimchaViewModel   
+﻿  @model SimchaViewModel
 
-   <div class="row">   
+<div class="row">
 
-   	<div class="col-md-12">   
-   		<button class="btn btn-info">New Simcha</button>
-        <table class="table table-hover table-bordered">
-            <tr>   
-   				<th>Contributions</th>   
-   				<th>Simcha Name</th>   
-   				<th>Contributor Count</th>   
-   				<th>Total</th>   
-   				<th>Date</th>   
-   			</tr>   
-   			@foreach (var simcha in Model.Simchas)   
-   			{   
-   				<tr>
-                    <td><a href="/home/SimchaContributors?simchaId=@simcha.SimchaId" class="btn btn-success">Contributions</a></td>
-                    <td>@simcha.SimchaName</td>   
-   					<td>@simcha.ContributorCount</td>
-                    <td>@simcha.Total.ToString("C")</td>
-                    <td>@simcha.SimchaDate</td>   
-   				</tr>   
-   			}   
-   		</table>   
-   	</div>   
-   </div>  
+	<div class="col-md-12">
+		<h1>Simchas</h1>
+		<button class="btn btn-info">New Simcha</button>
+		<table class="table table-hover table-bordered">
+			<tr>
+				<th>Contributions</th>
+				<th>Simcha Name</th>
+				<th>Contributor Count</th>
+				<th>Total</th>
+				<th>Date</th>
+			</tr>
+			@foreach (var simcha in Model.Simchas)
+			{
+				<tr>
+					<td><a href="/home/SimchaContributors?simchaId=@simcha.SimchaId" class="btn btn-success">Contributions</a></td>
+					<td>@simcha.SimchaName</td>
+					<td>@simcha.ContributorCount/@Model.TotalContributors</td>
+					<td>@simcha.Total.ToString("C")</td>
+					<td>@simcha.SimchaDate.ToLongDateString()</td>
+				</tr>
+			}
+		</table>
+	</div>
+</div>
+
+<div class="modal fade" id="simcha-modal" tabindex="-1" aria-labelledby="simchaModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="post" action="/home/addsimcha">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="simchaModalLabel">New Simcha</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 bg-light rounded-3 p-5">
+						<input type="text" class="form-control" placeholder="Simcha Name" name="simchaname" />
+						<br />
+						<input type="date" class="form-control" placeholder="Date" name="simchadate" />
+						<br />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@* <script src="~/js/modals.js"></script> *@
+	<script src="~/js/SimchaModals.js"></script>
+}

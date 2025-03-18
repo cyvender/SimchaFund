@@ -17,19 +17,20 @@
 			  	{  
 			  		<tr>  
 			  			 <td>
-							<input type="checkbox" class="form-check-input" name="contributors[@contributor.Index].Contributed" checked="@contributor.Contributed" value="true" /> 
+							<input type="checkbox" class="form-check-input" name="contributions[@contributor.Index].Contributed" checked="@contributor.Contributed" value="true" />
 						</td>   
 						@* <td>@contributor.Contributed</td> *@
 			  			<td>@contributor.FirstName @contributor.LastName</td>  
 			  			<td>@contributor.Balance.ToString("C")</td>  
 			  			<td>@contributor.AlwaysInclude</td>
 						  @* How do you put this in to show as currency? If you use .ToString("C") it won't submit it as a number *@
-						<td><input class="form-control" name="contributors[@contributor.Index].ContributionAmount" value="@(@contributor.ContributionAmount > 5 ? @contributor.ContributionAmount : 5)" /></td>
-						<input type="hidden" name="contributors[@contributor.Index].Id" value="@contributor.Id" />
+						<td><input class="form-control" name="contributions[@contributor.Index].ContributionAmount" value="@(@contributor.ContributionAmount > 5 ? @contributor.ContributionAmount : 5)" /></td>
+						<input type="hidden" name="contributions[@contributor.Index].ContributorId" value="@contributor.Id" />
+						<input type="hidden" name="contributions[@contributor.Index].SimchaId" value="@Model.SimchaId" />
 					</tr>  
 			  	}  
 			  </table>
-			<input type="hidden" name="simchaid" value="@Model.SimchaId" />
+			<input type="hidden" name="SimchaId" value="@Model.SimchaId" />
 			<button>Update</button>
 		</form>
 		

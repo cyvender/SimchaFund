@@ -17,8 +17,17 @@ namespace SimchaFund.Web.Controllers
 
             return View(new SimchaViewModel
             {
-                Simchas = sfdb.GetSimchas()
+                Simchas = sfdb.GetSimchas(),
+                TotalContributors = sfdb.GetContributors().Count
             });
+        }
+
+        [HttpPost]
+        public IActionResult AddSimcha(Simcha simcha)
+        {
+            var sfdb = new SimchaFundDB(_connectionString);
+            sfdb.AddSimcha(simcha);
+            return Redirect("/home/index");
         }
 
         public IActionResult Contributors()
@@ -37,6 +46,15 @@ namespace SimchaFund.Web.Controllers
             var sfdb = new SimchaFundDB(_connectionString);
             sfdb.AddContributor(contributor, deposit);
 
+            return Redirect("/home/contributors");
+        }
+
+
+        [HttpPost]
+        public IActionResult EditContributor(Contributor contributor)
+        {
+            var sfdb = new SimchaFundDB(_connectionString);
+            sfdb.EditContributor(contributor);
             return Redirect("/home/contributors");
         }
 
@@ -65,13 +83,23 @@ namespace SimchaFund.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateContributions(List<Contributor> contributors, int simchaId)
+        public IActionResult UpdateContributions(List<Contribution> contributions, int simchaId)
         {
-
             var sfdb = new SimchaFundDB(_connectionString);
-            sfdb.AddContributions(contributors, simchaId);
+            sfdb.AddContributions(contributions, simchaId);
             return Redirect("/home/index");
         }
 
+        public IActionResult History(int contributorId)
+        {
+            var sfdb = new SimchaFundDB(_connectionString);
+            
+            return View(
+                new HistoryViewModel
+                {
+                    Transactions = sfdb.GetHitstory(contributorId),
+                    Contributor = sfdb.GetContributorById(contributorId)
+                });
+        }
     }
 }
